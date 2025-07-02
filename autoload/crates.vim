@@ -1,5 +1,5 @@
 " autoload/crate.vim
-function! crate#SearchFZF(...) abort
+function! crates#SearchFZF(...) abort
   let g:crate_orig_bufnr = bufnr('%')
   let g:crate_orig_lnum = line('.')
 

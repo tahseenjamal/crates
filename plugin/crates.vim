@@ -6,4 +6,4 @@ endif
 let g:loaded_crate_fzf = 1
 
 " Define the :Crate command
-command! -nargs=? Crate call crate#SearchFZF(<f-args>)
+command! -nargs=? Crate call crates#SearchFZF(<f-args>)
