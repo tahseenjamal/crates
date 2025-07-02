@@ -1,4 +1,4 @@
-" autoload/crate.vim
+" autoload/crates.vim
 function! crates#SearchFZF(...) abort
   let g:crate_orig_bufnr = bufnr('%')
   let g:crate_orig_lnum = line('.')
@@ -136,7 +136,7 @@ function! crates#ApplyVersion(version) abort
       let l:features = systemlist('jq -r ".version.features | keys[]?" ' . l:temp_file)
       call delete(l:temp_file)
       echom 'Debug: API response for ' . g:crate_name . '@' . a:version . ': ' . strpart(l:json, 0, 100) . '...'
-      if v:shell_error != 0 || empty(l:features) && l:json =~# '"features":\s*{\s*}' || l:json =~# '"features":\s*null'
+      if v:shell_error != 0 || (empty(l:features) && l:json =~# '"features":\s*{\s*}' || l:json =~# '"features":\s*null')
         let l:features = []
         echom 'No features found for ' . g:crate_name . '@' . a:version . ', proceeding without features.'
       endif
