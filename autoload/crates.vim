@@ -75,7 +75,7 @@ function! crates#SearchFZF(...) abort
   " Step 7: Show crate list via FZF with description in preview
   call fzf#run(fzf#wrap({
         \ 'source': l:crates,
-        \ 'sink': function('crate#SelectCrate', [l:desc_temp_file]),
+        \ 'sink': function('crates#SelectCrate', [l:desc_temp_file]),
         \ 'options': [
         \   '--prompt', 'Select crate> ',
         \   '--preview', 'grep -F "^{1}|" ' . shellescape(l:desc_temp_file) . ' | cut -d"|" -f2- | fold -w 50',
@@ -85,7 +85,7 @@ function! crates#SearchFZF(...) abort
         \ }))
 endfunction
 
-function! crate#SelectCrate(desc_temp_file, selected) abort
+function! crates#SelectCrate(desc_temp_file, selected) abort
   call delete(a:desc_temp_file)
   let g:crate_name = a:selected
   if empty(g:crate_name) || g:crate_name =~# '[^a-zA-Z0-9_-]'
@@ -111,12 +111,12 @@ function! crate#SelectCrate(desc_temp_file, selected) abort
 
   call fzf#run(fzf#wrap({
         \ 'source': l:versions,
-        \ 'sink': function('crate#ApplyVersion'),
+        \ 'sink': function('crates#ApplyVersion'),
         \ 'prompt': 'Select version for ' . g:crate_name . '> '
         \ }))
 endfunction
 
-function! crate#ApplyVersion(version) abort
+function! crates#ApplyVersion(version) abort
   let l:line = getline(g:crate_orig_lnum)
   if l:line =~# '^\s*["' . "'" . ']*' . g:crate_name . '["' . "'" . ']*\s*='
     let l:newline = substitute(l:line, '\("[^"]*"\)', '"' . a:version . '"', '')
@@ -145,16 +145,16 @@ function! crate#ApplyVersion(version) abort
     if !empty(l:features)
       call fzf#run(fzf#wrap({
             \ 'source': l:features,
-            \ 'sink*': function('crate#ApplyFeatures', [a:version]),
+            \ 'sink*': function('crates#ApplyFeatures', [a:version]),
             \ 'options': ['--multi', '--prompt', 'Select features for ' . g:crate_name . '@' . a:version . '> '],
             \ }))
     else
-      call crate#ApplyFeatures(a:version, [])
+      call crates#ApplyFeatures(a:version, [])
     endif
   endif
 endfunction
 
-function! crate#ApplyFeatures(version, selected_features) abort
+function! crates#ApplyFeatures(version, selected_features) abort
   let l:cmd = 'cargo add ' . g:crate_name . '@' . a:version
   if !empty(a:selected_features)
     let l:cmd .= ' --features "' . join(a:selected_features, ' ') . '"'
