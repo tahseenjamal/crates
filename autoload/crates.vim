@@ -1,4 +1,4 @@
-" autoload/crates.vim
+" autoload/crate.vim
 function! crates#SearchFZF(...) abort
   let g:crate_orig_bufnr = bufnr('%')
   let g:crate_orig_lnum = line('.')

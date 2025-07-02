@@ -1,4 +1,4 @@
-" plugin/crate.vim
+" plugin/crates.vim
 " Prevent loading the plugin multiple times
 if exists('g:loaded_crate_fzf')
   finish
