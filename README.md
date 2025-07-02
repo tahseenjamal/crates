@@ -1,4 +1,4 @@
-# crate-fzf
+# crates
 
 A Vim plugin to search and add Rust crates to `Cargo.toml` using fzf. It uses `cargo search` to find crates, displays crate names in the fzf main window and descriptions in the preview window, and allows selecting versions and features via the crates.io API.
 
@@ -14,4 +14,4 @@ A Vim plugin to search and add Rust crates to `Cargo.toml` using fzf. It uses `c
 Using [Vim-Plug](https://github.com/junegunn/vim-plug):
 
 ```vim
-Plug 'username/crate-fzf'
+Plug 'tahseenjamal/crates'
